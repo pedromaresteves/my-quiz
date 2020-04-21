@@ -1,36 +1,40 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import GameMenu from "../components/GameMenu";
+import { defaultGameSettings } from "./testHelpers";
 
-test("Should update game mode select", async () => {
-  const mockUpdateFunction = jest.fn((x) => x);
+const mockUpdateFunction = jest.fn((x) => x);
+test("Should update form changes", () => {
   const { container } = render(
-    <Router>
+    <MemoryRouter>
       <GameMenu
-        gameSettings={mockGameSettings}
+        gameSettings={defaultGameSettings}
         updateGameSettings={mockUpdateFunction}
       />
-    </Router>
+    </MemoryRouter>
   );
-  const gameModeSelector = container.querySelector("[name='gameMode']");
-  const option2 = container.querySelector(
+  const gameModeSelect = container.querySelector("[name='gameMode']");
+  const playerInput = container.querySelector("[name='players']");
+  const questionsSelect = container.querySelector("[name='questions']");
+  const gameModeLastOption = container.querySelector(
     "[name='gameMode'] option:last-child"
   );
-  expect(gameModeSelector.value).toEqual("default");
-  fireEvent.change(gameModeSelector, { target: { value: option2.value } });
-  expect(gameModeSelector.value).toEqual(option2.value);
+  const questionsLastOption = container.querySelector(
+    "[name='questions'] option:last-child"
+  );
+  expect(gameModeSelect.value).toEqual("default");
+  fireEvent.change(gameModeSelect, {
+    target: { value: gameModeLastOption.value },
+  });
   expect(mockUpdateFunction).toHaveBeenCalledTimes(1);
+  expect(gameModeSelect.value).toEqual(gameModeLastOption.value);
+  fireEvent.change(playerInput, { target: { value: "Test Name Input" } });
+  expect(mockUpdateFunction).toHaveBeenCalledTimes(2);
+  expect(playerInput.value).toEqual("Test Name Input");
+  fireEvent.change(questionsSelect, {
+    target: { value: questionsLastOption.value },
+  });
+  expect(mockUpdateFunction).toHaveBeenCalledTimes(3);
+  expect(questionsSelect.value).toEqual(questionsLastOption.value);
 });
-
-const mockGameSettings = {
-  gameMode: "default",
-  players: [
-    {
-      name: "Player 1",
-    },
-  ],
-  categories: "all",
-  numberOfQuestions: 10,
-  award: "A fancy thumbs up",
-};

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 function Question(props) {
+  const currentQuestionNum = props.questions.currentQuestionNum;
+  const currentQuestion = props.questions.results[currentQuestionNum];
   const allAnswers = [
-    ...props.questions.results[0].incorrect_answers,
-    props.questions.results[0].correct_answer,
+    ...currentQuestion.incorrect_answers,
+    currentQuestion.correct_answer,
   ];
   allAnswers.sort(alphabeticSort);
   return (
     <div>
-      <h4>{props.questions.results[0].question}</h4>
+      <h4>{currentQuestion.question}</h4>
       <ul id="answer-list">
         {allAnswers.map((item) => (
           <li key={item}>{item}</li>
@@ -31,8 +33,8 @@ function Game(props) {
     //}
     //   });
   });
-  const poo = () => {
-    props.handleTime(true);
+  const startTimer = () => {
+    props.handleTime();
   };
   // if (!props.gameSettings.gameOn && props.gameSettings.timeLeft === 0) {
   // }
@@ -49,7 +51,7 @@ function Game(props) {
       ) : (
         <div>
           <h4>Press the button to start the game. Get Ready!</h4>
-          <button onClick={poo}>
+          <button onClick={startTimer}>
             Start game in {props.gameSettings.time.timeLeft}
           </button>
         </div>

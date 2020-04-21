@@ -11,14 +11,14 @@ function GameMenu(props) {
     if (propertyToUpdate === "players") {
       props.gameSettings[e.target.name][0].name = newValue;
     } else if (propertyToUpdate === "questions") {
-      props.gameSettings[e.target.name].numberOfQuestions = newValue;
+      props.gameSettings.questions.numberOfQuestions = newValue;
     } else {
       props.gameSettings[e.target.name] = newValue;
     }
     props.updateGameSettings(props.gameSettings);
   };
   return (
-    <div>
+    <div id="game-menu">
       <h2>Welcome to the Game Menu</h2>
       <form>
         <div>
@@ -42,7 +42,7 @@ function GameMenu(props) {
           </select>
         </div>
         <div>
-          <label htmlFor="numberOfQuestions">Set Number Of Questions: </label>
+          <label htmlFor="questions">Set Number Of Questions: </label>
 
           <select
             name="questions"

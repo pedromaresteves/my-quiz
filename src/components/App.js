@@ -76,6 +76,7 @@ const defaultGameSettings = {
   categories: "all",
   questions: {
     numberOfQuestions: 5,
+    currentQuestionNum: 0,
     results: [
       {
         category: "Entertainment: Video Games",
