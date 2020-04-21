@@ -28,6 +28,15 @@ button {
 button:hover {
   background-color: #ffffff;
 }
+
+.answer-btn {
+  margin: 10px auto;
+}
+
+.active-answer {
+  background-color: #c7e0ff;
+}
+
 @media all and (max-width: 30em) {
    button {
     display: block;
@@ -40,6 +49,8 @@ button:hover {
   text-decoration: none;
 }
 
-#answer-list {
-  list-style: none;
+#possible-answers-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

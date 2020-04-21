@@ -38,3 +38,18 @@ test("Should update form changes", () => {
   expect(mockUpdateFunction).toHaveBeenCalledTimes(3);
   expect(questionsSelect.value).toEqual(questionsLastOption.value);
 });
+
+test("When the create button is clicked we go to the Game", () => {
+  const { container } = render(
+    <MemoryRouter>
+      <GameMenu
+        gameSettings={defaultGameSettings}
+        updateGameSettings={mockUpdateFunction}
+      />
+    </MemoryRouter>
+  );
+  const createGameBtn = container.querySelector("form button");
+  fireEvent.click(createGameBtn);
+  const gameStartGameBtn = container.querySelector("#start-game");
+  expect(gameStartGameBtn).toBeDefined();
+});

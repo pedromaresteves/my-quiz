@@ -6,7 +6,7 @@ import { defaultGameSettings } from "./testHelpers";
 
 const mockUpdateFunction = jest.fn((x) => x);
 
-test("With default game settings the get ready message is shown", () => {
+test("With the default game settings the get ready message is shown", () => {
   const { container } = render(
     <MemoryRouter>
       <Game
@@ -16,26 +16,52 @@ test("With default game settings the get ready message is shown", () => {
     </MemoryRouter>
   );
   const getReadyMessage = container.querySelector("h4");
-  const startBtn = container.querySelector("button");
+  const startBtn = container.querySelector("#start-game");
   expect(getReadyMessage.textContent).toContain("Get Ready!");
   expect(startBtn).toBeDefined();
 });
 
-test("When gameOn is true and time running is true, questions are shown", () => {
+test("With a multiple type question, there are 4 available answers", () => {
   defaultGameSettings.gameOn = true;
   defaultGameSettings.time.timeRunning = true;
   const { container } = render(
     <MemoryRouter>
-      <Game
-        gameSettings={defaultGameSettings}
-        updateGameSettings={mockUpdateFunction}
-      />
+      <Game gameSettings={defaultGameSettings} />
     </MemoryRouter>
   );
+  const startBtn = container.querySelector("#start-game");
   const question = container.querySelector("h4");
-  const startBtn = container.querySelector("button");
-  expect(question.textContent).toContain(
-    defaultGameSettings.questions.results[0].question
+  const possibleAnswers = container.querySelectorAll(
+    "#possible-answers-list .answer-btn"
   );
   expect(startBtn).toBeNull();
+  expect(question.textContent).toContain(
+    defaultGameSettings.questions.results[
+      defaultGameSettings.questions.currentQuestionNum
+    ].question
+  );
+  expect(possibleAnswers.length).toEqual(4);
+});
+
+test("With a boolean type question, there are 2 available answers", () => {
+  defaultGameSettings.gameOn = true;
+  defaultGameSettings.time.timeRunning = true;
+  defaultGameSettings.questions.currentQuestionNum = 1;
+  const { container } = render(
+    <MemoryRouter>
+      <Game gameSettings={defaultGameSettings} />
+    </MemoryRouter>
+  );
+  const startBtn = container.querySelector("#start-game");
+  const question = container.querySelector("h4");
+  const possibleAnswers = container.querySelectorAll(
+    "#possible-answers-list .answer-btn"
+  );
+  expect(startBtn).toBeNull();
+  expect(question.textContent).toContain(
+    defaultGameSettings.questions.results[
+      defaultGameSettings.questions.currentQuestionNum
+    ].question
+  );
+  expect(possibleAnswers.length).toEqual(2);
 });

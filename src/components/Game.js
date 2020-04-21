@@ -1,21 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 function Question(props) {
-  const currentQuestionNum = props.questions.currentQuestionNum;
-  const currentQuestion = props.questions.results[currentQuestionNum];
+  const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
+  const currentQuestion =
+    props.gameSettings.questions.results[currentQuestionNum];
   const allAnswers = [
     ...currentQuestion.incorrect_answers,
     currentQuestion.correct_answer,
   ];
+  const answersDiv = useRef(null);
+  const selectAnswer = (e) => {
+    const answerBtns = Array.from(answersDiv.current.children);
+    answerBtns.forEach((btn) => {
+      btn.classList.remove("active-answer");
+    });
+    props.gameSettings.players[0].answers[currentQuestionNum] = {
+      questionNum: currentQuestionNum,
+      answer: e.target.textContent,
+    };
+    e.target.classList.add("active-answer");
+    props.updateGameSettings(props.gameSettings);
+  };
   allAnswers.sort(alphabeticSort);
   return (
     <div>
       <h4>{currentQuestion.question}</h4>
-      <ul id="answer-list">
+      <div id="possible-answers-list" ref={answersDiv}>
         {allAnswers.map((item) => (
-          <li key={item}>{item}</li>
+          <button key={item} className="answer-btn" onClick={selectAnswer}>
+            {item}
+          </button>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
@@ -46,12 +62,15 @@ function Game(props) {
           <p>
             Clock's ticking: <strong>{props.gameSettings.time.timeLeft}</strong>
           </p>
-          <Question questions={props.gameSettings.questions} />
+          <Question
+            gameSettings={props.gameSettings}
+            updateGameSettings={props.updateGameSettings}
+          />
         </div>
       ) : (
         <div>
           <h4>Press the button to start the game. Get Ready!</h4>
-          <button onClick={startTimer}>
+          <button id="start-game" onClick={startTimer}>
             Start game in {props.gameSettings.time.timeLeft}
           </button>
         </div>

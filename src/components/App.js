@@ -88,6 +88,14 @@ const defaultGameSettings = {
         incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
       },
       {
+        category: "Science & Nature",
+        type: "boolean",
+        difficulty: "easy",
+        question: "Igneous rocks are formed by excessive heat and pressure.",
+        correct_answer: "False",
+        incorrect_answers: ["True"],
+      },
+      {
         category: "Entertainment: Film",
         type: "multiple",
         difficulty: "hard",
@@ -131,6 +139,6 @@ const defaultGameSettings = {
     ],
   },
   award: "A fancy thumbs up",
-  time: { timeLeft: 5, timeRunning: false },
+  time: { timeLeft: 2, timeRunning: false },
   gameOn: false,
 };
