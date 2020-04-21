@@ -19,7 +19,7 @@ function Question(props) {
       answer: e.target.textContent,
     };
     e.target.classList.add("active-answer");
-    props.updateGameSettings(props.gameSettings);
+    //props.updateGameSettings(props.gameSettings);
   };
   allAnswers.sort(alphabeticSort);
   return (
@@ -49,18 +49,19 @@ function Game(props) {
     //}
     //   });
   });
+  const startTimerBtn = useRef(null);
   const startTimer = () => {
     props.handleTime();
+    startTimerBtn.current.disabled = true;
   };
-  // if (!props.gameSettings.gameOn && props.gameSettings.timeLeft === 0) {
-  // }
+
   return (
     <div>
       <h2>Game</h2>
-      {props.gameSettings.gameOn ? (
+      {props.time.gameOn ? (
         <div>
           <p>
-            Clock's ticking: <strong>{props.gameSettings.time.timeLeft}</strong>
+            Clock's ticking: <strong>{props.time.timeLeft}</strong>
           </p>
           <Question
             gameSettings={props.gameSettings}
@@ -70,8 +71,8 @@ function Game(props) {
       ) : (
         <div>
           <h4>Press the button to start the game. Get Ready!</h4>
-          <button id="start-game" onClick={startTimer}>
-            Start game in {props.gameSettings.time.timeLeft}
+          <button id="start-game" onClick={startTimer} ref={startTimerBtn}>
+            Start game in {props.time.timeLeft}
           </button>
         </div>
       )}

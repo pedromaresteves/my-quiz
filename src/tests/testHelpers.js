@@ -37,4 +37,10 @@ const defaultGameSettings = {
   gameOn: false,
 };
 
-export { defaultGameSettings };
+const timeSettings = {
+  timeLeft: 3,
+  timeRunning: false,
+  gameOn: false,
+};
+
+export { defaultGameSettings, timeSettings };

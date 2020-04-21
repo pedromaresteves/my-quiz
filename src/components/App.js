@@ -9,31 +9,37 @@ import "../App.css";
 
 function App() {
   const [gameSettings, setGameSettings] = useState(defaultGameSettings);
+  const [time, setTime] = useState({
+    timeLeft: 3,
+    timeRunning: false,
+    gameOn: false,
+  });
   const updateGameSettings = (newGameSettings) => {
     setGameSettings({ ...newGameSettings });
   };
 
   const handleTime = useCallback(() => {
     const timer = setTimeout(() => {
-      if (!gameSettings.time.timeLeft) {
+      if (!time.timeLeft) {
         clearTimeout(timer);
-        setGameSettings({
-          ...gameSettings,
-          time: { timeLeft: 35, timeRunning: true },
+        setTime({
+          timeLeft: 35,
+          timeRunning: true,
           gameOn: true,
         });
       }
-      if (gameSettings.time.timeLeft) {
-        setGameSettings({
-          ...gameSettings,
-          time: { timeLeft: --gameSettings.time.timeLeft, timeRunning: true },
+      if (time.timeLeft) {
+        setTime({
+          ...time,
+          timeLeft: --time.timeLeft,
+          timeRunning: true,
         });
       }
     }, 1000);
-  }, [gameSettings]);
+  }, [time]);
   useEffect(() => {
-    if (gameSettings.time.timeRunning) return handleTime();
-  }, [gameSettings, handleTime]);
+    if (time.timeRunning) return handleTime();
+  }, [time, handleTime]);
   return (
     <div className="App">
       <Header />
@@ -50,6 +56,7 @@ function App() {
         <Route path="/game">
           <Game
             gameSettings={gameSettings}
+            time={time}
             updateGameSettings={updateGameSettings}
             handleTime={handleTime}
           />
@@ -139,6 +146,6 @@ const defaultGameSettings = {
     ],
   },
   award: "A fancy thumbs up",
-  time: { timeLeft: 2, timeRunning: false },
+  //time: { timeLeft: 2, timeRunning: false },
   gameOn: false,
 };

@@ -1,8 +1,8 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Game from "../components/Game";
-import { defaultGameSettings } from "./testHelpers";
+import { defaultGameSettings, timeSettings } from "./testHelpers";
 
 const mockUpdateFunction = jest.fn((x) => x);
 
@@ -11,6 +11,7 @@ test("With the default game settings the get ready message is shown", () => {
     <MemoryRouter>
       <Game
         gameSettings={defaultGameSettings}
+        time={timeSettings}
         updateGameSettings={mockUpdateFunction}
       />
     </MemoryRouter>
@@ -22,11 +23,11 @@ test("With the default game settings the get ready message is shown", () => {
 });
 
 test("With a multiple type question, there are 4 available answers", () => {
-  defaultGameSettings.gameOn = true;
-  defaultGameSettings.time.timeRunning = true;
+  timeSettings.gameOn = true;
+  timeSettings.timeRunning = true;
   const { container } = render(
     <MemoryRouter>
-      <Game gameSettings={defaultGameSettings} />
+      <Game gameSettings={defaultGameSettings} time={timeSettings} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");
@@ -44,12 +45,12 @@ test("With a multiple type question, there are 4 available answers", () => {
 });
 
 test("With a boolean type question, there are 2 available answers", () => {
-  defaultGameSettings.gameOn = true;
-  defaultGameSettings.time.timeRunning = true;
+  timeSettings.gameOn = true;
+  timeSettings.timeRunning = true;
   defaultGameSettings.questions.currentQuestionNum = 1;
   const { container } = render(
     <MemoryRouter>
-      <Game gameSettings={defaultGameSettings} />
+      <Game gameSettings={defaultGameSettings} time={timeSettings} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");
