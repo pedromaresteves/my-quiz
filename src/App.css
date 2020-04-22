@@ -54,3 +54,8 @@ button:hover {
   flex-direction: column;
   justify-content: center;
 }
+
+.next-question-btn {
+  background-color: seagreen;
+  width: 50%;
+}

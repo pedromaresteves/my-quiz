@@ -13,30 +13,44 @@ function App() {
     timeLeft: 3,
     timeRunning: false,
     gameOn: false,
+    startTimer: true,
   });
   const updateGameSettings = (propertyToUpdate, newValue) => {
     setGameSettings({ ...gameSettings, [propertyToUpdate]: newValue });
   };
 
-  const handleTime = useCallback(() => {
-    const timer = setTimeout(() => {
-      if (!time.timeLeft) {
-        clearTimeout(timer);
-        setTime({
-          timeLeft: 35,
-          timeRunning: true,
-          gameOn: true,
-        });
-      }
-      if (time.timeLeft) {
-        setTime({
-          ...time,
-          timeLeft: --time.timeLeft,
-          timeRunning: true,
-        });
-      }
-    }, 1000);
-  }, [time]);
+  const handleTime = useCallback(
+    (nextBtnWasPressed) => {
+      const timer = setTimeout(() => {
+        if (!time.timeLeft) {
+          if (time.startTimer || nextBtnWasPressed) {
+            clearTimeout(timer);
+            setTime({
+              timeLeft: 5,
+              timeRunning: true,
+              gameOn: true,
+              startTimer: false,
+            });
+          } else {
+            clearTimeout(timer);
+            setTime({
+              timeLeft: 0,
+              timeRunning: false,
+              gameOn: true,
+            });
+          }
+        }
+        if (time.timeLeft) {
+          setTime({
+            ...time,
+            timeLeft: --time.timeLeft,
+            timeRunning: true,
+          });
+        }
+      }, 1000);
+    },
+    [time]
+  );
   useEffect(() => {
     if (time.timeRunning) return handleTime();
   }, [time, handleTime]);

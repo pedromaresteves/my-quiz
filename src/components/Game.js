@@ -19,6 +19,9 @@ function Game(props) {
     props.handleTime();
     startTimerBtn.current.disabled = true;
   };
+  const goToNextQuestion = () => {
+    props.handleTime(true);
+  };
 
   return (
     <div>
@@ -32,6 +35,9 @@ function Game(props) {
             gameSettings={props.gameSettings}
             updateGameSettings={props.updateGameSettings}
           />
+          <button className="next-question-btn" onClick={goToNextQuestion}>
+            Next
+          </button>
         </div>
       ) : (
         <div>
