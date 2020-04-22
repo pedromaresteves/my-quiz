@@ -4,18 +4,22 @@ import { Link } from "react-router-dom";
 function GameMenu(props) {
   const handleFormChanges = (e) => {
     const propertyToUpdate = e.target.name;
-    let newValue = e.target.value;
-    if (Number(newValue)) {
-      newValue = Number(newValue);
-    }
+    let newPropertyValue = e.target.value;
     if (propertyToUpdate === "players") {
-      props.gameSettings[e.target.name][0].name = newValue;
+      newPropertyValue = [
+        {
+          name: e.target.value,
+          id: 1,
+          answers: [],
+        },
+      ];
     } else if (propertyToUpdate === "questions") {
-      props.gameSettings.questions.numberOfQuestions = newValue;
-    } else {
-      props.gameSettings[e.target.name] = newValue;
+      newPropertyValue = {
+        ...props.gameSettings.questions,
+        numberOfQuestions: Number(e.target.value),
+      };
     }
-    props.updateGameSettings(props.gameSettings);
+    props.updateGameSettings(propertyToUpdate, newPropertyValue);
   };
   return (
     <div id="game-menu">
@@ -46,7 +50,7 @@ function GameMenu(props) {
 
           <select
             name="questions"
-            defaultValue={props.gameSettings.numberOfQuestions}
+            defaultValue={props.gameSettings.questions.numberOfQuestions}
             onChange={handleFormChanges}
           >
             <option value="5">5</option>

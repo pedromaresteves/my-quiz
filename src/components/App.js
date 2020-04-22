@@ -14,8 +14,8 @@ function App() {
     timeRunning: false,
     gameOn: false,
   });
-  const updateGameSettings = (newGameSettings) => {
-    setGameSettings({ ...newGameSettings });
+  const updateGameSettings = (propertyToUpdate, newValue) => {
+    setGameSettings({ ...gameSettings, [propertyToUpdate]: newValue });
   };
 
   const handleTime = useCallback(() => {
@@ -82,7 +82,7 @@ const defaultGameSettings = {
   ],
   categories: "all",
   questions: {
-    numberOfQuestions: 5,
+    numberOfQuestions: 15,
     currentQuestionNum: 0,
     results: [
       {
