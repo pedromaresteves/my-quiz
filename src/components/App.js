@@ -8,6 +8,7 @@ import PageNotFound from "./PageNotFound";
 import "../App.css";
 
 function App() {
+  const questionTime = 5;
   const [gameSettings, setGameSettings] = useState(defaultGameSettings);
   const [time, setTime] = useState({
     timeLeft: 3,
@@ -18,39 +19,46 @@ function App() {
   const updateGameSettings = (propertyToUpdate, newValue) => {
     setGameSettings({ ...gameSettings, [propertyToUpdate]: newValue });
   };
+  const updateTime = (propertyToUpdate, newValue) => {
+    setTime({ ...time, [propertyToUpdate]: newValue });
+  };
 
-  const handleTime = useCallback(
-    (nextBtnWasPressed) => {
-      const timer = setTimeout(() => {
-        if (!time.timeLeft) {
-          if (time.startTimer || nextBtnWasPressed) {
-            clearTimeout(timer);
-            setTime({
-              timeLeft: 5,
-              timeRunning: true,
-              gameOn: true,
-              startTimer: false,
-            });
-          } else {
-            clearTimeout(timer);
-            setTime({
-              timeLeft: 0,
-              timeRunning: false,
-              gameOn: true,
-            });
-          }
-        }
-        if (time.timeLeft) {
+  const handleTime = useCallback(() => {
+    setTimeout(() => {
+      if (!time.timeLeft) {
+        if (time.startTimer) {
           setTime({
+            ...time,
+            timeLeft: questionTime,
+            gameOn: true,
+            startTimer: false,
+          });
+        } else {
+          return setTime({
+            ...time,
+            timeLeft: 0,
+            timeRunning: false,
+          });
+        }
+      }
+      if (time.timeLeft) {
+        if (gameSettings.resetTimer) {
+          setGameSettings({ ...gameSettings, resetTimer: false });
+          return setTime({
+            ...time,
+            timeLeft: questionTime,
+            timeRunning: true,
+          });
+        } else {
+          return setTime({
             ...time,
             timeLeft: --time.timeLeft,
             timeRunning: true,
           });
         }
-      }, 1000);
-    },
-    [time]
-  );
+      }
+    }, 1000);
+  }, [time]);
   useEffect(() => {
     if (time.timeRunning) return handleTime();
   }, [time, handleTime]);
@@ -70,7 +78,11 @@ function App() {
         <Route path="/game">
           <Game
             gameSettings={gameSettings}
+            setGameSettings={setGameSettings}
             time={time}
+            questionTime={questionTime}
+            setTime={setTime}
+            updateTime={updateTime}
             updateGameSettings={updateGameSettings}
             handleTime={handleTime}
           />
@@ -160,6 +172,5 @@ const defaultGameSettings = {
     ],
   },
   award: "A fancy thumbs up",
-  //time: { timeLeft: 2, timeRunning: false },
-  gameOn: false,
+  resetTimer: false,
 };

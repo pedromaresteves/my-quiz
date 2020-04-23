@@ -29,7 +29,12 @@ function Question(props) {
       <h4>{currentQuestion.question}</h4>
       <div id="possible-answers-list" ref={answersDiv}>
         {allAnswers.map((item) => (
-          <button key={item} className="answer-btn" onClick={selectAnswer}>
+          <button
+            key={item}
+            className="answer-btn"
+            disabled={!props.time.timeLeft}
+            onClick={selectAnswer}
+          >
             {item}
           </button>
         ))}
