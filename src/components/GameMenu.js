@@ -5,14 +5,8 @@ function GameMenu(props) {
   const handleFormChanges = (e) => {
     const propertyToUpdate = e.target.name;
     let newPropertyValue = e.target.value;
-    if (propertyToUpdate === "players") {
-      newPropertyValue = [
-        {
-          name: e.target.value,
-          id: 1,
-          answers: [],
-        },
-      ];
+    if (propertyToUpdate === "player") {
+      newPropertyValue = { ...props.gameSettings.player, name: e.target.value };
     } else if (propertyToUpdate === "questions") {
       newPropertyValue = {
         ...props.gameSettings.questions,
@@ -26,10 +20,10 @@ function GameMenu(props) {
       <h2>Welcome to the Game Menu</h2>
       <form>
         <div>
-          <label htmlFor="players">Insert your name </label>
+          <label htmlFor="player">Insert your name </label>
           <input
-            name="players"
-            defaultValue={props.gameSettings.players[0].name}
+            name="player"
+            defaultValue={props.gameSettings.player.name}
             onChange={handleFormChanges}
           ></input>
         </div>

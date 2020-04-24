@@ -21,7 +21,9 @@ function Game(props) {
   };
 
   const goToNextQuestion = () => {
-    let nextQuestion = props.gameSettings.questions.currentQuestionNum + 1;
+    const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
+    let nextQuestion = currentQuestionNum + 1;
+    let playerNewState = { ...props.gameSettings.player };
     if (nextQuestion !== props.gameSettings.questions.results.length) {
       const changedGameSettingsData = {
         questions: {
@@ -30,13 +32,15 @@ function Game(props) {
         },
         resetTimer: true,
       };
-      props.updateGameSettings2000(changedGameSettingsData);
+      if (!playerNewState.answers[currentQuestionNum])
+        playerNewState.answers[currentQuestionNum] = null;
+      props.updateGameSettings(changedGameSettingsData);
       if (props.time.timeLeft <= 1) {
         const changedtimeData = {
           timeRunning: true,
           timeLeft: props.questionTime,
         };
-        props.updateTime2000(changedtimeData);
+        props.updateTime(changedtimeData);
       }
     } else {
       const changedtimeData = {
@@ -44,7 +48,7 @@ function Game(props) {
         timeLeft: 0,
         gameOn: false,
       };
-      props.updateTime2000(changedtimeData);
+      props.updateTime(changedtimeData);
     }
   };
 
@@ -61,7 +65,6 @@ function Game(props) {
               gameSettings={props.gameSettings}
               time={props.time}
               updateGameSettings={props.updateGameSettings}
-              updateGameSettings2000={props.updateGameSettings2000}
             />
             <button className="next-question-btn" onClick={goToNextQuestion}>
               Next

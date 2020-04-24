@@ -15,28 +15,20 @@ function App() {
     timeRunning: false,
     gameOn: false,
   });
-  const updateGameSettings = (propertyToUpdate, newValue) => {
-    setGameSettings({ ...gameSettings, [propertyToUpdate]: newValue });
-  };
-  const updateGameSettings2000 = (propertyToUpdate, optionalNewValue) => {
-    if (typeof propertyToUpdate === "object") {
-      return propertyToUpdate.isArray
-        ? setGameSettings({
-            ...gameSettings,
-            [propertyToUpdate]: optionalNewValue,
-          })
-        : setGameSettings({ ...gameSettings, ...propertyToUpdate });
+  const updateGameSettings = (propertyToUpdate, optionalNewValue) => {
+    if (
+      typeof propertyToUpdate === "object" &&
+      !Array.isArray(propertyToUpdate)
+    ) {
+      return setGameSettings({ ...gameSettings, ...propertyToUpdate });
     }
     return setGameSettings({
       ...gameSettings,
       [propertyToUpdate]: optionalNewValue,
     });
   };
-  const updateTime2000 = (objectWithNewValues) => {
+  const updateTime = (objectWithNewValues) => {
     setTime({ ...time, ...objectWithNewValues });
-  };
-  const updateTime = (propertyToUpdate, newValue) => {
-    setTime({ ...time, [propertyToUpdate]: newValue });
   };
 
   const handleTime = useCallback(() => {
@@ -94,12 +86,8 @@ function App() {
         <Route path="/game">
           <Game
             gameSettings={gameSettings}
-            setGameSettings={setGameSettings}
-            updateGameSettings2000={updateGameSettings2000}
             time={time}
-            updateTime2000={updateTime2000}
             questionTime={questionTime}
-            setTime={setTime}
             updateTime={updateTime}
             updateGameSettings={updateGameSettings}
             handleTime={handleTime}
@@ -117,13 +105,10 @@ export default App;
 
 const defaultGameSettings = {
   gameMode: "default",
-  players: [
-    {
-      name: "Player 1",
-      id: 1,
-      answers: [],
-    },
-  ],
+  player: {
+    name: "Player 1",
+    answers: [],
+  },
   categories: "all",
   questions: {
     numberOfQuestions: 15,
