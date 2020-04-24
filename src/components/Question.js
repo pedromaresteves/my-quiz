@@ -19,7 +19,7 @@ function Question(props) {
     propertyValue = [...props.gameSettings.players];
     propertyValue[0].answers[currentQuestionNum] = e.target.textContent;
     e.target.classList.add("active-answer");
-    props.updateGameSettings(props.gameSettings.players[0], propertyValue);
+    props.updateGameSettings2000(props.gameSettings.players[0], propertyValue);
   };
 
   allAnswers.sort(alphabeticSort);

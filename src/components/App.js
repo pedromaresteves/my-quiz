@@ -14,10 +14,26 @@ function App() {
     timeLeft: 3,
     timeRunning: false,
     gameOn: false,
-    startTimer: true,
   });
   const updateGameSettings = (propertyToUpdate, newValue) => {
     setGameSettings({ ...gameSettings, [propertyToUpdate]: newValue });
+  };
+  const updateGameSettings2000 = (propertyToUpdate, optionalNewValue) => {
+    if (typeof propertyToUpdate === "object") {
+      return propertyToUpdate.isArray
+        ? setGameSettings({
+            ...gameSettings,
+            [propertyToUpdate]: optionalNewValue,
+          })
+        : setGameSettings({ ...gameSettings, ...propertyToUpdate });
+    }
+    return setGameSettings({
+      ...gameSettings,
+      [propertyToUpdate]: optionalNewValue,
+    });
+  };
+  const updateTime2000 = (objectWithNewValues) => {
+    setTime({ ...time, ...objectWithNewValues });
   };
   const updateTime = (propertyToUpdate, newValue) => {
     setTime({ ...time, [propertyToUpdate]: newValue });
@@ -26,12 +42,12 @@ function App() {
   const handleTime = useCallback(() => {
     setTimeout(() => {
       if (!time.timeLeft) {
-        if (time.startTimer) {
+        if (!time.gameOn) {
           setTime({
             ...time,
             timeLeft: questionTime,
             gameOn: true,
-            startTimer: false,
+            timeRunning: true,
           });
         } else {
           return setTime({
@@ -79,7 +95,9 @@ function App() {
           <Game
             gameSettings={gameSettings}
             setGameSettings={setGameSettings}
+            updateGameSettings2000={updateGameSettings2000}
             time={time}
+            updateTime2000={updateTime2000}
             questionTime={questionTime}
             setTime={setTime}
             updateTime={updateTime}
