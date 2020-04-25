@@ -14,42 +14,35 @@ function Game(props) {
     //}
     //   });
   });
+  const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
   const startTimerBtn = useRef(null);
   const startTimer = () => {
     props.handleTime();
     startTimerBtn.current.disabled = true;
   };
-
   const goToNextQuestion = () => {
-    const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
     let nextQuestion = currentQuestionNum + 1;
     let playerNewState = { ...props.gameSettings.player };
-    if (nextQuestion !== props.gameSettings.questions.results.length) {
-      const changedGameSettingsData = {
-        questions: {
-          ...props.gameSettings.questions,
-          currentQuestionNum: nextQuestion,
-        },
-        resetTimer: true,
-      };
-      if (!playerNewState.answers[currentQuestionNum])
-        playerNewState.answers[currentQuestionNum] = null;
-      props.updateGameSettings(changedGameSettingsData);
-      if (props.time.timeLeft <= 1) {
-        const changedtimeData = {
-          timeRunning: true,
-          timeLeft: props.questionTime,
-        };
-        props.updateTime(changedtimeData);
-      }
-    } else {
-      const changedtimeData = {
-        timeRunning: false,
-        timeLeft: 0,
-        gameOn: false,
-      };
-      props.updateTime(changedtimeData);
+    if (!playerNewState.answers[currentQuestionNum])
+      playerNewState.answers[currentQuestionNum] = null;
+    const changedGameSettingsData = {
+      questions: {
+        ...props.gameSettings.questions,
+        currentQuestionNum: nextQuestion,
+      },
+      player: playerNewState,
+    };
+    props.updateGameSettings(changedGameSettingsData);
+    props.resetTimer();
+    const changedtimeData = {
+      timeLeft: 5,
+      timeRunning: true,
+    };
+    if (nextQuestion === props.gameSettings.questions.results.length) {
+      changedtimeData.gameOn = false;
+      changedtimeData.timeRunning = false;
     }
+    props.updateTime(changedtimeData);
   };
 
   return (

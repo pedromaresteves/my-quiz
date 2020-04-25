@@ -7,6 +7,8 @@ import GameMenu from "./GameMenu";
 import PageNotFound from "./PageNotFound";
 import "../App.css";
 
+let timer;
+
 function App() {
   const questionTime = 5;
   const [gameSettings, setGameSettings] = useState(defaultGameSettings);
@@ -31,8 +33,12 @@ function App() {
     setTime({ ...time, ...objectWithNewValues });
   };
 
+  const resetTimer = () => {
+    clearTimeout(timer);
+  };
+
   const handleTime = useCallback(() => {
-    setTimeout(() => {
+    timer = setTimeout(() => {
       if (!time.timeLeft) {
         if (!time.gameOn) {
           setTime({
@@ -50,20 +56,11 @@ function App() {
         }
       }
       if (time.timeLeft) {
-        if (gameSettings.resetTimer) {
-          setGameSettings({ ...gameSettings, resetTimer: false });
-          return setTime({
-            ...time,
-            timeLeft: questionTime,
-            timeRunning: true,
-          });
-        } else {
-          return setTime({
-            ...time,
-            timeLeft: --time.timeLeft,
-            timeRunning: true,
-          });
-        }
+        return setTime({
+          ...time,
+          timeLeft: --time.timeLeft,
+          timeRunning: true,
+        });
       }
     }, 1000);
   }, [time]);
@@ -87,6 +84,7 @@ function App() {
           <Game
             gameSettings={gameSettings}
             time={time}
+            resetTimer={resetTimer}
             questionTime={questionTime}
             updateTime={updateTime}
             updateGameSettings={updateGameSettings}
