@@ -15,7 +15,7 @@ test("Should update form changes", () => {
     </MemoryRouter>
   );
   const gameModeSelect = container.querySelector("[name='gameMode']");
-  const playerInput = container.querySelector("[name='players']");
+  const playerInput = container.querySelector("[name='player']");
   const questionsSelect = container.querySelector("[name='questions']");
   const gameModeLastOption = container.querySelector(
     "[name='gameMode'] option:last-child"

@@ -19,13 +19,10 @@ const booleanAnswer = {
 
 const defaultGameSettings = {
   gameMode: "default",
-  players: [
-    {
-      name: "Player 1",
-      id: 1,
-      answers: [],
-    },
-  ],
+  player: {
+    name: "Player 1",
+    answers: [],
+  },
   categories: "all",
   questions: {
     numberOfQuestions: 5,
@@ -33,8 +30,6 @@ const defaultGameSettings = {
     results: [multipleAnswerQuestion, booleanAnswer],
   },
   award: "A fancy thumbs up",
-  time: { timeLeft: 5, timeRunning: false },
-  gameOn: false,
 };
 
 const timeSettings = {
