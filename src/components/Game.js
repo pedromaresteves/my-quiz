@@ -49,28 +49,19 @@ function Game(props) {
     <div>
       <h2>Game</h2>
       {props.time.gameOn ? (
-        !props.gameSettings.resetTimer ? (
-          <div>
-            <p>
-              Clock's ticking: <strong>{props.time.timeLeft}</strong>
-            </p>
-            <Question
-              gameSettings={props.gameSettings}
-              time={props.time}
-              updateGameSettings={props.updateGameSettings}
-            />
-            <button className="next-question-btn" onClick={goToNextQuestion}>
-              Next
-            </button>
-          </div>
-        ) : (
-          <div>
-            <p>
-              Clock's ticking: <strong>{props.questionTime}</strong>
-            </p>
-            <p>Get ready Darling</p>
-          </div>
-        )
+        <div>
+          <p>
+            Clock's ticking: <strong>{props.time.timeLeft}</strong>
+          </p>
+          <Question
+            gameSettings={props.gameSettings}
+            time={props.time}
+            updateGameSettings={props.updateGameSettings}
+          />
+          <button className="next-question-btn" onClick={goToNextQuestion}>
+            Next
+          </button>
+        </div>
       ) : !props.gameSettings.questions.currentQuestionNum ? (
         <div>
           <h4>Press the button to start the game. Get Ready!</h4>
