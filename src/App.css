@@ -1,3 +1,14 @@
+table,
+th,
+td {
+  margin: auto;
+  border: 1px solid black;
+}
+
+tr {
+  height: 2em;
+}
+
 .App {
   text-align: center;
 }
@@ -58,4 +69,29 @@ button:hover {
 .next-question-btn {
   background-color: seagreen;
   width: 50%;
+}
+
+#results {
+  margin: 0 3em;
+}
+.result-list-question {
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.result-answer-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.correct {
+  color: green;
+  font-weight: 500;
+}
+.incorrect {
+  color: red;
 }

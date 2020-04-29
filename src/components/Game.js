@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Question from "./Question";
+import Results from "./Results";
 
 function Game(props) {
   useEffect(() => {
@@ -45,35 +46,36 @@ function Game(props) {
     props.updateTime(changedtimeData);
   };
 
-  return (
-    <div>
-      <h2>Game</h2>
-      {props.time.gameOn ? (
-        <div>
-          <p>
-            Clock's ticking: <strong>{props.time.timeLeft}</strong>
-          </p>
-          <Question
-            gameSettings={props.gameSettings}
-            time={props.time}
-            updateGameSettings={props.updateGameSettings}
-          />
-          <button className="next-question-btn" onClick={goToNextQuestion}>
-            Next
-          </button>
-        </div>
-      ) : !props.gameSettings.questions.currentQuestionNum ? (
-        <div>
-          <h4>Press the button to start the game. Get Ready!</h4>
-          <button id="start-game" onClick={startTimer} ref={startTimerBtn}>
-            Start game in {props.time.timeLeft}
-          </button>
-        </div>
-      ) : (
-        <p>RESULTS</p>
-      )}
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h2>Game</h2>
+  //     {props.time.gameOn ? (
+  //       <div>
+  //         <p>
+  //           Clock's ticking: <strong>{props.time.timeLeft}</strong>
+  //         </p>
+  //         <Question
+  //           gameSettings={props.gameSettings}
+  //           time={props.time}
+  //           updateGameSettings={props.updateGameSettings}
+  //         />
+  //         <button className="next-question-btn" onClick={goToNextQuestion}>
+  //           Next
+  //         </button>
+  //       </div>
+  //     ) : !props.gameSettings.questions.currentQuestionNum ? (
+  //       <div>
+  //         <h4>Press the button to start the game. Get Ready!</h4>
+  //         <button id="start-game" onClick={startTimer} ref={startTimerBtn}>
+  //           Start game in {props.time.timeLeft}
+  //         </button>
+  //       </div>
+  //     ) : (
+  //       <Results gameSettings={props.gameSettings} />
+  //     )}
+  //   </div>
+  // );
+  return <Results gameSettings={props.gameSettings} />;
 }
 
 export default Game;
