@@ -1,19 +1,12 @@
 import React from "react";
 
 function Results(props) {
-  let correctAnswersCounter = 0;
-  props.gameSettings.questions.results.forEach((item) => {
-    const answer =
-      props.gameSettings.player.answers[
-        props.gameSettings.questions.results.indexOf(item)
-      ];
-    if (answer === item.correct_answer) correctAnswersCounter++;
-  });
+  const correctAnswersNumber = getCorrectAnswerCount(props.gameSettings);
   return (
     <div id="results">
       <h1>Results</h1>
       <h2>
-        {props.gameSettings.player.name} score: {correctAnswersCounter}/
+        {props.gameSettings.player.name} score: {correctAnswersNumber}/
         {props.gameSettings.questions.results.length}
       </h2>
       <table>
@@ -53,4 +46,14 @@ function Results(props) {
   );
 }
 
-export default Results;
+const getCorrectAnswerCount = (gameSettings) => {
+  let correctAnswersCounter = 0;
+  gameSettings.questions.results.forEach((item) => {
+    const answer =
+      gameSettings.player.answers[gameSettings.questions.results.indexOf(item)];
+    if (answer === item.correct_answer) correctAnswersCounter++;
+  });
+  return correctAnswersCounter;
+};
+
+export { getCorrectAnswerCount, Results };

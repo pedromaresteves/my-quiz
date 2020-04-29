@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Home from "./Home";
-import Game from "./Game";
+import Game from "./gameplay/Game";
 import GameMenu from "./GameMenu";
 import PageNotFound from "./PageNotFound";
 import "../App.css";

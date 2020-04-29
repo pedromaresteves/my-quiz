@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Question from "./Question";
-import Results from "./Results";
+import { Results } from "./Results";
 
 function Game(props) {
   useEffect(() => {
