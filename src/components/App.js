@@ -105,7 +105,7 @@ const defaultGameSettings = {
   gameMode: "default",
   player: {
     name: "Player 1",
-    answers: ["Quake Engine", "False", "dick munch"],
+    answers: [],
   },
   categories: "all",
   questions: {
