@@ -19,10 +19,6 @@ const booleanAnswer = {
 
 const defaultGameSettings = {
   gameMode: "default",
-  player: {
-    name: "Player 1",
-    answers: [],
-  },
   categories: "all",
   questions: {
     numberOfQuestions: 5,
@@ -32,10 +28,15 @@ const defaultGameSettings = {
   award: "A fancy thumbs up",
 };
 
+const defaultPlayerData = {
+  name: "Player 1",
+  answers: [],
+};
+
 const timeSettings = {
   timeLeft: 3,
   timeRunning: false,
   gameOn: false,
 };
 
-export { defaultGameSettings, timeSettings };
+export { defaultGameSettings, defaultPlayerData, timeSettings };

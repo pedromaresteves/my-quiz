@@ -11,12 +11,66 @@ let timer;
 
 function App() {
   const questionTime = 5;
-  const [gameSettings, setGameSettings] = useState(defaultGameSettings);
+  const [gameSettings, setGameSettings] = useState({ ...defaultGameSettings });
+  const [playerData, setPlayerData] = useState({
+    name: "Player 1",
+    answers: [],
+  });
   const [time, setTime] = useState({
-    timeLeft: 3,
+    timeLeft: questionTime,
     timeRunning: false,
     gameOn: false,
   });
+  const resetTimer = () => {
+    clearTimeout(timer);
+  };
+
+  const resetState = () => {
+    const changedtimeData = {
+      timeLeft: questionTime,
+      timeRunning: false,
+      gameOn: false,
+    };
+    updateTime(changedtimeData);
+    setPlayerData({
+      name: "Player 1",
+      answers: [],
+    });
+    setGameSettings({
+      ...gameSettings,
+      questions: {
+        numberOfQuestions: 15,
+        currentQuestionNum: 0,
+        results: [
+          {
+            category: "Entertainment: Video Games",
+            type: "multiple",
+            difficulty: "easy",
+            question:
+              "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
+            correct_answer: "Quake Engine",
+            incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
+          },
+          {
+            category: "Science & Nature",
+            type: "boolean",
+            difficulty: "easy",
+            question:
+              "Igneous rocks are formed by excessive heat and pressure.",
+            correct_answer: "False",
+            incorrect_answers: ["True"],
+          },
+        ],
+      },
+    });
+    resetTimer();
+  };
+  const updatePlayerData = (propertyToUpdate, newValue) => {
+    return setPlayerData({
+      ...playerData,
+      [propertyToUpdate]: newValue,
+    });
+  };
   const updateGameSettings = (propertyToUpdate, optionalNewValue) => {
     if (
       typeof propertyToUpdate === "object" &&
@@ -30,11 +84,8 @@ function App() {
     });
   };
   const updateTime = (objectWithNewValues) => {
+    console.log({ ...time, ...objectWithNewValues });
     setTime({ ...time, ...objectWithNewValues });
-  };
-
-  const resetTimer = () => {
-    clearTimeout(timer);
   };
 
   const handleTime = useCallback(() => {
@@ -72,22 +123,27 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home resetState={resetState} />
         </Route>
         <Route path="/game-menu">
           <GameMenu
             gameSettings={gameSettings}
+            playerData={playerData}
             updateGameSettings={updateGameSettings}
+            updatePlayerData={updatePlayerData}
+            resetTimer={resetTimer}
           />
         </Route>
         <Route path="/game">
           <Game
             gameSettings={gameSettings}
+            playerData={playerData}
             time={time}
-            resetTimer={resetTimer}
             questionTime={questionTime}
+            resetTimer={resetTimer}
             updateTime={updateTime}
             updateGameSettings={updateGameSettings}
+            updatePlayerData={updatePlayerData}
             handleTime={handleTime}
           />
         </Route>
@@ -103,10 +159,6 @@ export default App;
 
 const defaultGameSettings = {
   gameMode: "default",
-  player: {
-    name: "Player 1",
-    answers: [],
-  },
   categories: "all",
   questions: {
     numberOfQuestions: 15,
@@ -129,49 +181,7 @@ const defaultGameSettings = {
         correct_answer: "False",
         incorrect_answers: ["True"],
       },
-      {
-        category: "Entertainment: Film",
-        type: "multiple",
-        difficulty: "hard",
-        question:
-          "What did Alfred Hitchcock use as blood in the film &quot;Psycho&quot;? ",
-        correct_answer: "Chocolate syrup",
-        incorrect_answers: ["Ketchup", "Red food coloring", "Maple syrup"],
-      },
-      {
-        category: "Film",
-        type: "multiple",
-        difficulty: "easy",
-        question: "Who's the worse actor?",
-        correct_answer: "Keanu Reeves",
-        incorrect_answers: ["Matthew Broderick", "Jude Law", "Nicolau Breyner"],
-      },
-      {
-        category: "Music",
-        type: "multiple",
-        difficulty: "easy",
-        question: "What's the worse music band in the world?",
-        correct_answer: "NickelBack",
-        incorrect_answers: [
-          "Onda Shock",
-          "João Matos e os Bandalma",
-          "João Matos sem os desprezíveis Bandalma",
-        ],
-      },
-      {
-        category: "Videogames",
-        type: "multiple",
-        difficulty: "easy",
-        question: "Qual é o melhor videojogo?",
-        correct_answer: "Summer Challenge",
-        incorrect_answers: [
-          "Winter Challenge",
-          "California Games 2",
-          "Hot Rod",
-        ],
-      },
     ],
   },
   award: "A fancy thumbs up",
-  resetTimer: false,
 };

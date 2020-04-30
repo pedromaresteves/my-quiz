@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Home() {
+function Home(props) {
   return (
     <div id="home">
       <Link to="/game-menu">
-        <button>start quizz</button>
+        <button onClick={props.resetState}>start quizz</button>
       </Link>
       <button>join quizz</button>
     </div>

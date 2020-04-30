@@ -21,29 +21,27 @@ function Game(props) {
     props.handleTime();
     startTimerBtn.current.disabled = true;
   };
+
   const goToNextQuestion = () => {
     let nextQuestion = currentQuestionNum + 1;
-    let playerNewState = { ...props.gameSettings.player };
-    if (!playerNewState.answers[currentQuestionNum])
-      playerNewState.answers[currentQuestionNum] = null;
+    const isLastQuestion =
+      nextQuestion === props.gameSettings.questions.results.length;
+    if (!props.playerData.answers[currentQuestionNum]) {
+      props.updatePlayerData("answers", [...props.playerData.answers, null]);
+    }
     const changedGameSettingsData = {
       questions: {
         ...props.gameSettings.questions,
         currentQuestionNum: nextQuestion,
       },
-      player: playerNewState,
     };
+    const newTimeState = timeState4NextQuestion(
+      isLastQuestion,
+      props.questionTime
+    );
     props.updateGameSettings(changedGameSettingsData);
     props.resetTimer();
-    const changedtimeData = {
-      timeLeft: 5,
-      timeRunning: true,
-    };
-    if (nextQuestion === props.gameSettings.questions.results.length) {
-      changedtimeData.gameOn = false;
-      changedtimeData.timeRunning = false;
-    }
-    props.updateTime(changedtimeData);
+    props.updateTime(newTimeState);
   };
 
   return (
@@ -56,8 +54,10 @@ function Game(props) {
           </p>
           <Question
             gameSettings={props.gameSettings}
+            playerData={props.playerData}
             time={props.time}
             updateGameSettings={props.updateGameSettings}
+            updatePlayerData={props.updatePlayerData}
           />
           <button className="next-question-btn" onClick={goToNextQuestion}>
             Next
@@ -71,10 +71,24 @@ function Game(props) {
           </button>
         </div>
       ) : (
-        <Results gameSettings={props.gameSettings} />
+        <Results
+          gameSettings={props.gameSettings}
+          playerData={props.playerData}
+        />
       )}
     </div>
   );
 }
+
+const timeState4NextQuestion = (isLastQuestion, standardQuestionTime) => {
+  const changedtimeData = {
+    timeLeft: standardQuestionTime,
+  };
+  if (isLastQuestion) {
+    changedtimeData.gameOn = false;
+    changedtimeData.timeRunning = false;
+  }
+  return changedtimeData;
+};
 
 export default Game;

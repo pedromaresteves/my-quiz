@@ -2,24 +2,27 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Results, getCorrectAnswerCount } from "../components/gameplay/Results";
-import { defaultGameSettings } from "./testHelpers";
+import { defaultGameSettings, defaultPlayerData } from "./testHelpers";
 
 let firstAnswerToBeCorrect =
   defaultGameSettings.questions.results[0].correct_answer;
 let secondAnswerToBeIncorrect = "Incorrect Answer";
 
 beforeEach(() => {
-  defaultGameSettings.player.answers = [];
+  defaultPlayerData.answers = [];
 });
 
 test("Check that correct/incorrect answers have proper className", () => {
-  defaultGameSettings.player.answers = [
+  defaultPlayerData.answers = [
     firstAnswerToBeCorrect,
     secondAnswerToBeIncorrect,
   ];
   const { container } = render(
     <MemoryRouter>
-      <Results gameSettings={defaultGameSettings} />
+      <Results
+        gameSettings={defaultGameSettings}
+        playerData={defaultPlayerData}
+      />
     </MemoryRouter>
   );
   const firstAnswer = container.querySelector(
@@ -33,10 +36,14 @@ test("Check that correct/incorrect answers have proper className", () => {
 });
 
 test("getCorrectAnswerCount Works as expected", () => {
-  expect(getCorrectAnswerCount(defaultGameSettings)).toEqual(0);
-  defaultGameSettings.player.answers = [
+  expect(getCorrectAnswerCount(defaultGameSettings, defaultPlayerData)).toEqual(
+    0
+  );
+  defaultPlayerData.answers = [
     firstAnswerToBeCorrect,
     secondAnswerToBeIncorrect,
   ];
-  expect(getCorrectAnswerCount(defaultGameSettings)).toEqual(1);
+  expect(getCorrectAnswerCount(defaultGameSettings, defaultPlayerData)).toEqual(
+    1
+  );
 });

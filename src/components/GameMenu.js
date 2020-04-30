@@ -5,8 +5,8 @@ function GameMenu(props) {
   const handleFormChanges = (e) => {
     const propertyToUpdate = e.target.name;
     let newPropertyValue = e.target.value;
-    if (propertyToUpdate === "player") {
-      newPropertyValue = { ...props.gameSettings.player, name: e.target.value };
+    if (propertyToUpdate === "name") {
+      return props.updatePlayerData(propertyToUpdate, newPropertyValue);
     } else if (propertyToUpdate === "questions") {
       newPropertyValue = {
         ...props.gameSettings.questions,
@@ -15,15 +15,18 @@ function GameMenu(props) {
     }
     props.updateGameSettings(propertyToUpdate, newPropertyValue);
   };
+  const setNewGame = () => {
+    props.resetTimer();
+  };
   return (
     <div id="game-menu">
       <h2>Welcome to the Game Menu</h2>
       <form>
         <div>
-          <label htmlFor="player">Insert your name </label>
+          <label htmlFor="name">Insert your name </label>
           <input
-            name="player"
-            defaultValue={props.gameSettings.player.name}
+            name="name"
+            defaultValue={props.playerData.name}
             onChange={handleFormChanges}
           ></input>
         </div>
@@ -56,7 +59,9 @@ function GameMenu(props) {
         </div>
         <div className="form-group">
           <Link to="game">
-            <button type="submit">Create Game</button>
+            <button type="submit" onClick={setNewGame}>
+              Create Game
+            </button>
           </Link>
         </div>
       </form>

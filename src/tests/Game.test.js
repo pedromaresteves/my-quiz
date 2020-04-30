@@ -1,8 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Game from "../components/Game";
-import { defaultGameSettings, timeSettings } from "./testHelpers";
+import Game from "../components/gameplay/Game";
+import {
+  defaultGameSettings,
+  defaultPlayerData,
+  timeSettings,
+} from "./testHelpers";
 
 const mockUpdateFunction = jest.fn((x) => x);
 
@@ -11,6 +15,7 @@ test("With the default game settings the get ready message is shown", () => {
     <MemoryRouter>
       <Game
         gameSettings={defaultGameSettings}
+        playerData={defaultPlayerData}
         time={timeSettings}
         updateGameSettings={mockUpdateFunction}
       />

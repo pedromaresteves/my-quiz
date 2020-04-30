@@ -2,20 +2,25 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import GameMenu from "../components/GameMenu";
-import { defaultGameSettings } from "./testHelpers";
+import { defaultGameSettings, defaultPlayerData } from "./testHelpers";
 
-const mockUpdateFunction = jest.fn((x) => x);
+const mockGameSettingsUpdate = jest.fn((x) => x);
+const mockUpdatePlayerData = jest.fn((x) => x);
+const mockResetTimer = jest.fn((x) => x);
 test("Should update form changes", () => {
   const { container } = render(
     <MemoryRouter>
       <GameMenu
         gameSettings={defaultGameSettings}
-        updateGameSettings={mockUpdateFunction}
+        playerData={defaultPlayerData}
+        updateGameSettings={mockGameSettingsUpdate}
+        updatePlayerData={mockUpdatePlayerData}
+        resetTimer={mockResetTimer}
       />
     </MemoryRouter>
   );
   const gameModeSelect = container.querySelector("[name='gameMode']");
-  const playerInput = container.querySelector("[name='player']");
+  const playerInput = container.querySelector("[name='name']");
   const questionsSelect = container.querySelector("[name='questions']");
   const gameModeLastOption = container.querySelector(
     "[name='gameMode'] option:last-child"
@@ -27,15 +32,15 @@ test("Should update form changes", () => {
   fireEvent.change(gameModeSelect, {
     target: { value: gameModeLastOption.value },
   });
-  expect(mockUpdateFunction).toHaveBeenCalledTimes(1);
+  expect(mockGameSettingsUpdate).toHaveBeenCalledTimes(1);
   expect(gameModeSelect.value).toEqual(gameModeLastOption.value);
   fireEvent.change(playerInput, { target: { value: "Test Name Input" } });
-  expect(mockUpdateFunction).toHaveBeenCalledTimes(2);
+  expect(mockUpdatePlayerData).toHaveBeenCalledTimes(1);
   expect(playerInput.value).toEqual("Test Name Input");
   fireEvent.change(questionsSelect, {
     target: { value: questionsLastOption.value },
   });
-  expect(mockUpdateFunction).toHaveBeenCalledTimes(3);
+  expect(mockGameSettingsUpdate).toHaveBeenCalledTimes(2);
   expect(questionsSelect.value).toEqual(questionsLastOption.value);
 });
 
@@ -44,7 +49,9 @@ test("When the create button is clicked we go to the Game", () => {
     <MemoryRouter>
       <GameMenu
         gameSettings={defaultGameSettings}
-        updateGameSettings={mockUpdateFunction}
+        playerData={defaultPlayerData}
+        updateGameSettings={mockGameSettingsUpdate}
+        resetTimer={mockResetTimer}
       />
     </MemoryRouter>
   );

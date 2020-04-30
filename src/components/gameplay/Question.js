@@ -11,15 +11,14 @@ function Question(props) {
   const answersDiv = useRef(null);
 
   const selectAnswer = (e) => {
-    let newPropertyValue;
     const answerBtns = Array.from(answersDiv.current.children);
+    const playerAnswers = props.playerData.answers;
     answerBtns.forEach((btn) => {
       btn.classList.remove("active-answer");
     });
-    newPropertyValue = { ...props.gameSettings.player };
-    newPropertyValue.answers[currentQuestionNum] = e.target.textContent;
+    playerAnswers[currentQuestionNum] = e.target.textContent;
+    props.updatePlayerData("answers", playerAnswers);
     e.target.classList.add("active-answer");
-    props.updateGameSettings(newPropertyValue);
   };
 
   allAnswers.sort(alphabeticSort);
