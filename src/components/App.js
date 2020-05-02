@@ -25,17 +25,14 @@ function App() {
     clearTimeout(timer);
   };
 
-  const resetState = () => {
-    const changedtimeData = {
-      timeLeft: questionTime,
-      timeRunning: false,
-      gameOn: false,
-    };
-    updateTime(changedtimeData);
+  const resetPlayerData = () => {
     setPlayerData({
       name: "Player 1",
       answers: [],
     });
+  };
+
+  const resetGameAndTimeData = () => {
     setGameSettings({
       ...gameSettings,
       questions: {
@@ -63,8 +60,24 @@ function App() {
         ],
       },
     });
+  };
+
+  const resetTimeData = () => {
+    const changedtimeData = {
+      timeLeft: questionTime,
+      timeRunning: false,
+      gameOn: false,
+    };
+    updateTime(changedtimeData);
     resetTimer();
   };
+
+  const resetFullState = () => {
+    resetPlayerData();
+    resetGameAndTimeData();
+    resetTimeData();
+  };
+
   const updatePlayerData = (propertyToUpdate, newValue) => {
     return setPlayerData({
       ...playerData,
@@ -84,7 +97,6 @@ function App() {
     });
   };
   const updateTime = (objectWithNewValues) => {
-    console.log({ ...time, ...objectWithNewValues });
     setTime({ ...time, ...objectWithNewValues });
   };
 
@@ -123,7 +135,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Home resetState={resetState} />
+          <Home resetFullState={resetFullState} />
         </Route>
         <Route path="/game-menu">
           <GameMenu
@@ -131,7 +143,7 @@ function App() {
             playerData={playerData}
             updateGameSettings={updateGameSettings}
             updatePlayerData={updatePlayerData}
-            resetTimer={resetTimer}
+            resetTimeData={resetTimeData}
           />
         </Route>
         <Route path="/game">

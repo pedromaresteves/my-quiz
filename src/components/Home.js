@@ -5,7 +5,7 @@ function Home(props) {
   return (
     <div id="home">
       <Link to="/game-menu">
-        <button onClick={props.resetState}>start quizz</button>
+        <button onClick={props.resetFullState}>start quizz</button>
       </Link>
       <button>join quizz</button>
     </div>

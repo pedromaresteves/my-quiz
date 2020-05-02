@@ -16,7 +16,14 @@ function GameMenu(props) {
     props.updateGameSettings(propertyToUpdate, newPropertyValue);
   };
   const setNewGame = () => {
-    props.resetTimer();
+    props.resetTimeData();
+    const changedGameSettingsData = {
+      questions: {
+        ...props.gameSettings.questions,
+        currentQuestionNum: 0,
+      },
+    };
+    props.updateGameSettings(changedGameSettingsData);
   };
   return (
     <div id="game-menu">

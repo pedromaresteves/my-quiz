@@ -6,7 +6,7 @@ import { defaultGameSettings, defaultPlayerData } from "./testHelpers";
 
 const mockGameSettingsUpdate = jest.fn((x) => x);
 const mockUpdatePlayerData = jest.fn((x) => x);
-const mockResetTimer = jest.fn((x) => x);
+const mockResetTimeData = jest.fn((x) => x);
 test("Should update form changes", () => {
   const { container } = render(
     <MemoryRouter>
@@ -15,7 +15,7 @@ test("Should update form changes", () => {
         playerData={defaultPlayerData}
         updateGameSettings={mockGameSettingsUpdate}
         updatePlayerData={mockUpdatePlayerData}
-        resetTimer={mockResetTimer}
+        resetTimeData={mockResetTimeData}
       />
     </MemoryRouter>
   );
@@ -51,7 +51,8 @@ test("When the create button is clicked we go to the Game", () => {
         gameSettings={defaultGameSettings}
         playerData={defaultPlayerData}
         updateGameSettings={mockGameSettingsUpdate}
-        resetTimer={mockResetTimer}
+        updatePlayerData={mockUpdatePlayerData}
+        resetTimeData={mockResetTimeData}
       />
     </MemoryRouter>
   );
