@@ -7,23 +7,13 @@ function GameMenu(props) {
     let newPropertyValue = e.target.value;
     if (propertyToUpdate === "name") {
       return props.updatePlayerData(propertyToUpdate, newPropertyValue);
-    } else if (propertyToUpdate === "questions") {
-      newPropertyValue = {
-        ...props.gameSettings.questions,
-        numberOfQuestions: Number(e.target.value),
-      };
     }
-    props.updateGameSettings(propertyToUpdate, newPropertyValue);
+    if (Number(newPropertyValue)) newPropertyValue = Number(newPropertyValue);
+    return props.updateQuestions(propertyToUpdate, newPropertyValue);
   };
   const setNewGame = () => {
     props.resetTimeData();
-    const changedGameSettingsData = {
-      questions: {
-        ...props.gameSettings.questions,
-        currentQuestionNum: 0,
-      },
-    };
-    props.updateGameSettings(changedGameSettingsData);
+    return props.updateQuestions("currentQuestionNum", 0);
   };
   return (
     <div id="game-menu">
@@ -42,7 +32,7 @@ function GameMenu(props) {
 
           <select
             name="gameMode"
-            defaultValue={props.gameSettings.gameMode}
+            defaultValue={props.questions.gameMode}
             onChange={handleFormChanges}
           >
             <option value="default">Default</option>
@@ -50,11 +40,11 @@ function GameMenu(props) {
           </select>
         </div>
         <div>
-          <label htmlFor="questions">Set Number Of Questions: </label>
+          <label htmlFor="numberOfQuestions">Set Number Of Questions: </label>
 
           <select
-            name="questions"
-            defaultValue={props.gameSettings.questions.numberOfQuestions}
+            name="numberOfQuestions"
+            defaultValue={props.questions.numberOfQuestions}
             onChange={handleFormChanges}
           >
             <option value="5">5</option>

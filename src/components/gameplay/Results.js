@@ -2,7 +2,7 @@ import React from "react";
 
 function Results(props) {
   const correctAnswersNumber = getCorrectAnswerCount(
-    props.gameSettings,
+    props.questions,
     props.playerData
   );
   return (
@@ -10,7 +10,7 @@ function Results(props) {
       <h1>Results</h1>
       <h2>
         {props.playerData.name} score: {correctAnswersNumber}/
-        {props.gameSettings.questions.results.length}
+        {props.questions.results.length}
       </h2>
       <table>
         <thead>
@@ -24,11 +24,9 @@ function Results(props) {
             <th>Correct Answer</th>
             <th>{props.playerData.name}</th>
           </tr>
-          {props.gameSettings.questions.results.map((item) => {
+          {props.questions.results.map((item) => {
             const answer =
-              props.playerData.answers[
-                props.gameSettings.questions.results.indexOf(item)
-              ];
+              props.playerData.answers[props.questions.results.indexOf(item)];
             return (
               <tr key={item.question}>
                 <td>{item.question}</td>
@@ -49,11 +47,10 @@ function Results(props) {
   );
 }
 
-const getCorrectAnswerCount = (gameSettings, playerData) => {
+const getCorrectAnswerCount = (questions, playerData) => {
   let correctAnswersCounter = 0;
-  gameSettings.questions.results.forEach((item) => {
-    const answer =
-      playerData.answers[gameSettings.questions.results.indexOf(item)];
+  questions.results.forEach((item) => {
+    const answer = playerData.answers[questions.results.indexOf(item)];
     if (answer === item.correct_answer) correctAnswersCounter++;
   });
   return correctAnswersCounter;

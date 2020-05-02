@@ -17,26 +17,23 @@ const booleanAnswer = {
   incorrect_answers: ["True"],
 };
 
-const defaultGameSettings = {
+const mockQuestions = {
   gameMode: "default",
   categories: "all",
-  questions: {
-    numberOfQuestions: 5,
-    currentQuestionNum: 0,
-    results: [multipleAnswerQuestion, booleanAnswer],
-  },
-  award: "A fancy thumbs up",
+  numberOfQuestions: 5,
+  currentQuestionNum: 0,
+  results: [multipleAnswerQuestion, booleanAnswer],
 };
 
-const defaultPlayerData = {
+const mockPlayerData = {
   name: "Player 1",
   answers: [],
 };
 
-const timeSettings = {
+const mockTime = {
   timeLeft: 3,
   timeRunning: false,
   gameOn: false,
 };
 
-export { defaultGameSettings, defaultPlayerData, timeSettings };
+export { mockQuestions, mockPlayerData, mockTime };

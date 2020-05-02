@@ -15,7 +15,7 @@ function Game(props) {
     //}
     //   });
   });
-  const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
+  const currentQuestionNum = props.questions.currentQuestionNum;
   const startTimerBtn = useRef(null);
   const startTimer = () => {
     props.handleTime();
@@ -24,22 +24,15 @@ function Game(props) {
 
   const goToNextQuestion = () => {
     let nextQuestion = currentQuestionNum + 1;
-    const isLastQuestion =
-      nextQuestion === props.gameSettings.questions.results.length;
+    const isLastQuestion = nextQuestion === props.questions.results.length;
     if (!props.playerData.answers[currentQuestionNum]) {
       props.updatePlayerData("answers", [...props.playerData.answers, null]);
     }
-    const changedGameSettingsData = {
-      questions: {
-        ...props.gameSettings.questions,
-        currentQuestionNum: nextQuestion,
-      },
-    };
     const newTimeState = timeState4NextQuestion(
       isLastQuestion,
       props.questionTime
     );
-    props.updateGameSettings(changedGameSettingsData);
+    props.updateQuestions("currentQuestionNum", nextQuestion);
     props.resetTimer();
     props.updateTime(newTimeState);
   };
@@ -53,17 +46,16 @@ function Game(props) {
             Clock's ticking: <strong>{props.time.timeLeft}</strong>
           </p>
           <Question
-            gameSettings={props.gameSettings}
+            questions={props.questions}
             playerData={props.playerData}
             time={props.time}
-            updateGameSettings={props.updateGameSettings}
             updatePlayerData={props.updatePlayerData}
           />
           <button className="next-question-btn" onClick={goToNextQuestion}>
             Next
           </button>
         </div>
-      ) : !props.gameSettings.questions.currentQuestionNum ? (
+      ) : !props.questions.currentQuestionNum ? (
         <div>
           <h4>Press the button to start the game. Get Ready!</h4>
           <button id="start-game" onClick={startTimer} ref={startTimerBtn}>
@@ -71,10 +63,7 @@ function Game(props) {
           </button>
         </div>
       ) : (
-        <Results
-          gameSettings={props.gameSettings}
-          playerData={props.playerData}
-        />
+        <Results questions={props.questions} playerData={props.playerData} />
       )}
     </div>
   );

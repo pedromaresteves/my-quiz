@@ -1,9 +1,8 @@
 import React, { useRef } from "react";
 
 function Question(props) {
-  const currentQuestionNum = props.gameSettings.questions.currentQuestionNum;
-  const currentQuestion =
-    props.gameSettings.questions.results[currentQuestionNum];
+  const currentQuestionNum = props.questions.currentQuestionNum;
+  const currentQuestion = props.questions.results[currentQuestionNum];
   const allAnswers = [
     ...currentQuestion.incorrect_answers,
     currentQuestion.correct_answer,

@@ -2,11 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Game from "../components/gameplay/Game";
-import {
-  defaultGameSettings,
-  defaultPlayerData,
-  timeSettings,
-} from "./testHelpers";
+import { mockQuestions, defaultPlayerData, mockTime } from "./testHelpers";
 
 const mockUpdateFunction = jest.fn((x) => x);
 
@@ -14,9 +10,9 @@ test("With the default game settings the get ready message is shown", () => {
   const { container } = render(
     <MemoryRouter>
       <Game
-        gameSettings={defaultGameSettings}
+        questions={mockQuestions}
         playerData={defaultPlayerData}
-        time={timeSettings}
+        time={mockTime}
         updateGameSettings={mockUpdateFunction}
       />
     </MemoryRouter>
@@ -28,11 +24,11 @@ test("With the default game settings the get ready message is shown", () => {
 });
 
 test("With a multiple type question, there are 4 available answers", () => {
-  timeSettings.gameOn = true;
-  timeSettings.timeRunning = true;
+  mockTime.gameOn = true;
+  mockTime.timeRunning = true;
   const { container } = render(
     <MemoryRouter>
-      <Game gameSettings={defaultGameSettings} time={timeSettings} />
+      <Game questions={mockQuestions} time={mockTime} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");
@@ -42,20 +38,18 @@ test("With a multiple type question, there are 4 available answers", () => {
   );
   expect(startBtn).toBeNull();
   expect(question.textContent).toContain(
-    defaultGameSettings.questions.results[
-      defaultGameSettings.questions.currentQuestionNum
-    ].question
+    mockQuestions.results[mockQuestions.currentQuestionNum].question
   );
   expect(possibleAnswers.length).toEqual(4);
 });
 
 test("With a boolean type question, there are 2 available answers", () => {
-  timeSettings.gameOn = true;
-  timeSettings.timeRunning = true;
-  defaultGameSettings.questions.currentQuestionNum = 1;
+  mockTime.gameOn = true;
+  mockTime.timeRunning = true;
+  mockQuestions.currentQuestionNum = 1;
   const { container } = render(
     <MemoryRouter>
-      <Game gameSettings={defaultGameSettings} time={timeSettings} />
+      <Game questions={mockQuestions} time={mockTime} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");
@@ -65,9 +59,7 @@ test("With a boolean type question, there are 2 available answers", () => {
   );
   expect(startBtn).toBeNull();
   expect(question.textContent).toContain(
-    defaultGameSettings.questions.results[
-      defaultGameSettings.questions.currentQuestionNum
-    ].question
+    mockQuestions.results[mockQuestions.currentQuestionNum].question
   );
   expect(possibleAnswers.length).toEqual(2);
 });

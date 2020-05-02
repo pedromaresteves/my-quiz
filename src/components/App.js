@@ -11,7 +11,31 @@ let timer;
 
 function App() {
   const questionTime = 5;
-  const [gameSettings, setGameSettings] = useState({ ...defaultGameSettings });
+  const [questions, setQuestions] = useState({
+    gameMode: "default",
+    categories: "all",
+    numberOfQuestions: 15,
+    currentQuestionNum: 0,
+    results: [
+      {
+        category: "Entertainment: Video Games",
+        type: "multiple",
+        difficulty: "easy",
+        question:
+          "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
+        correct_answer: "Quake Engine",
+        incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
+      },
+      {
+        category: "Science & Nature",
+        type: "boolean",
+        difficulty: "easy",
+        question: "Igneous rocks are formed by excessive heat and pressure.",
+        correct_answer: "False",
+        incorrect_answers: ["True"],
+      },
+    ],
+  });
   const [playerData, setPlayerData] = useState({
     name: "Player 1",
     answers: [],
@@ -32,33 +56,31 @@ function App() {
     });
   };
 
-  const resetGameAndTimeData = () => {
-    setGameSettings({
-      ...gameSettings,
-      questions: {
-        numberOfQuestions: 15,
-        currentQuestionNum: 0,
-        results: [
-          {
-            category: "Entertainment: Video Games",
-            type: "multiple",
-            difficulty: "easy",
-            question:
-              "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
-            correct_answer: "Quake Engine",
-            incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
-          },
-          {
-            category: "Science & Nature",
-            type: "boolean",
-            difficulty: "easy",
-            question:
-              "Igneous rocks are formed by excessive heat and pressure.",
-            correct_answer: "False",
-            incorrect_answers: ["True"],
-          },
-        ],
-      },
+  const resetQuestions = () => {
+    setQuestions({
+      gameMode: "default",
+      categories: "all",
+      numberOfQuestions: 15,
+      currentQuestionNum: 0,
+      results: [
+        {
+          category: "Entertainment: Video Games",
+          type: "multiple",
+          difficulty: "easy",
+          question:
+            "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
+          correct_answer: "Quake Engine",
+          incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
+        },
+        {
+          category: "Science & Nature",
+          type: "boolean",
+          difficulty: "easy",
+          question: "Igneous rocks are formed by excessive heat and pressure.",
+          correct_answer: "False",
+          incorrect_answers: ["True"],
+        },
+      ],
     });
   };
 
@@ -74,7 +96,7 @@ function App() {
 
   const resetFullState = () => {
     resetPlayerData();
-    resetGameAndTimeData();
+    resetQuestions();
     resetTimeData();
   };
 
@@ -84,16 +106,11 @@ function App() {
       [propertyToUpdate]: newValue,
     });
   };
-  const updateGameSettings = (propertyToUpdate, optionalNewValue) => {
-    if (
-      typeof propertyToUpdate === "object" &&
-      !Array.isArray(propertyToUpdate)
-    ) {
-      return setGameSettings({ ...gameSettings, ...propertyToUpdate });
-    }
-    return setGameSettings({
-      ...gameSettings,
-      [propertyToUpdate]: optionalNewValue,
+  const updateQuestions = (propertyToUpdate, newValue) => {
+    console.log(propertyToUpdate, newValue);
+    return setQuestions({
+      ...questions,
+      [propertyToUpdate]: newValue,
     });
   };
   const updateTime = (objectWithNewValues) => {
@@ -139,22 +156,22 @@ function App() {
         </Route>
         <Route path="/game-menu">
           <GameMenu
-            gameSettings={gameSettings}
             playerData={playerData}
-            updateGameSettings={updateGameSettings}
+            questions={questions}
+            updateQuestions={updateQuestions}
             updatePlayerData={updatePlayerData}
             resetTimeData={resetTimeData}
           />
         </Route>
         <Route path="/game">
           <Game
-            gameSettings={gameSettings}
             playerData={playerData}
+            questions={questions}
+            updateQuestions={updateQuestions}
             time={time}
             questionTime={questionTime}
             resetTimer={resetTimer}
             updateTime={updateTime}
-            updateGameSettings={updateGameSettings}
             updatePlayerData={updatePlayerData}
             handleTime={handleTime}
           />
@@ -168,32 +185,3 @@ function App() {
 }
 
 export default App;
-
-const defaultGameSettings = {
-  gameMode: "default",
-  categories: "all",
-  questions: {
-    numberOfQuestions: 15,
-    currentQuestionNum: 0,
-    results: [
-      {
-        category: "Entertainment: Video Games",
-        type: "multiple",
-        difficulty: "easy",
-        question:
-          "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
-        correct_answer: "Quake Engine",
-        incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
-      },
-      {
-        category: "Science & Nature",
-        type: "boolean",
-        difficulty: "easy",
-        question: "Igneous rocks are formed by excessive heat and pressure.",
-        correct_answer: "False",
-        incorrect_answers: ["True"],
-      },
-    ],
-  },
-  award: "A fancy thumbs up",
-};
