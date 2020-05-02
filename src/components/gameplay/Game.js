@@ -39,7 +39,6 @@ function Game(props) {
 
   return (
     <div>
-      <h2>Game</h2>
       {props.time.gameOn ? (
         <div>
           <p>
@@ -57,10 +56,15 @@ function Game(props) {
         </div>
       ) : !props.questions.currentQuestionNum ? (
         <div>
-          <h4>Press the button to start the game. Get Ready!</h4>
+          <h4>Press the button to start the game.</h4>
           <button id="start-game" onClick={startTimer} ref={startTimerBtn}>
-            Start game in {props.time.timeLeft}
+            Start Countdown
           </button>
+          {props.time.timeRunning ? (
+            <p>You have {props.time.timeLeft} seconds to get ready</p>
+          ) : (
+            <p>You'll have 5 seconds to get ready</p>
+          )}
         </div>
       ) : (
         <Results questions={props.questions} playerData={props.playerData} />
@@ -72,6 +76,7 @@ function Game(props) {
 const timeState4NextQuestion = (isLastQuestion, standardQuestionTime) => {
   const changedtimeData = {
     timeLeft: standardQuestionTime,
+    timeRunning: true,
   };
   if (isLastQuestion) {
     changedtimeData.gameOn = false;
