@@ -4,17 +4,18 @@ import { Results } from "./Results";
 
 function Game(props) {
   useEffect(() => {
-    // fetch(`https://opentdb.com/api.php?amount=${props.gameSettings.numberOfQuestions}`)
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     if (data.response_code === 0){
-    //     props.gameSettings.questions.results = data.results;
-    //     props.updateGameSettings(props.gameSettings.questions.results);
-    //}
-    //   });
-  });
+    fetch(
+      `https://opentdb.com/api.php?amount=${props.questions.numberOfQuestions}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.response_code === 0) {
+          props.updateQuestions("results", data.results);
+        }
+      });
+  }, []);
   const currentQuestionNum = props.questions.currentQuestionNum;
   const startTimerBtn = useRef(null);
   const startTimer = () => {
@@ -63,7 +64,7 @@ function Game(props) {
           {props.time.timeRunning ? (
             <p>You have {props.time.timeLeft} seconds to get ready</p>
           ) : (
-            <p>You'll have 5 seconds to get ready</p>
+            <p>You'll have 3 seconds to get ready</p>
           )}
         </div>
       ) : (

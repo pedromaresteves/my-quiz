@@ -10,7 +10,8 @@ import "../App.css";
 let timer;
 
 function App() {
-  const questionTime = 5;
+  const questionTime = 45;
+  const countdownTime = 3;
   const [questions, setQuestions] = useState({
     gameMode: "default",
     categories: "all",
@@ -84,12 +85,13 @@ function App() {
     });
   };
 
-  const resetTimeData = () => {
+  const resetTimeData = (countdown) => {
     const changedtimeData = {
       timeLeft: questionTime,
       timeRunning: false,
       gameOn: false,
     };
+    if (countdown) changedtimeData.timeLeft = countdownTime;
     updateTime(changedtimeData);
     resetTimer();
   };
@@ -97,7 +99,7 @@ function App() {
   const resetFullState = () => {
     resetPlayerData();
     resetQuestions();
-    resetTimeData();
+    resetTimeData(true);
   };
 
   const updatePlayerData = (propertyToUpdate, newValue) => {
@@ -107,7 +109,6 @@ function App() {
     });
   };
   const updateQuestions = (propertyToUpdate, newValue) => {
-    console.log(propertyToUpdate, newValue);
     return setQuestions({
       ...questions,
       [propertyToUpdate]: newValue,

@@ -12,7 +12,7 @@ function GameMenu(props) {
     return props.updateQuestions(propertyToUpdate, newPropertyValue);
   };
   const setNewGame = () => {
-    props.resetTimeData();
+    props.resetTimeData(true);
     return props.updateQuestions("currentQuestionNum", 0);
   };
   return (
