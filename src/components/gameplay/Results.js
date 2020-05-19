@@ -1,4 +1,6 @@
 import React from "react";
+import dompurify from 'dompurify';
+const sanitizer = dompurify.sanitize;
 
 function Results(props) {
   const correctAnswersNumber = getCorrectAnswerCount(
@@ -29,14 +31,14 @@ function Results(props) {
               props.playerData.answers[props.questions.results.indexOf(item)];
             return (
               <tr key={item.question}>
-                <td>{item.question}</td>
-                <td>{item.correct_answer}</td>
+                <td dangerouslySetInnerHTML={{__html: sanitizer(item.question)}}></td>
+                <td dangerouslySetInnerHTML={{__html: sanitizer(item.correct_answer)}}></td>
                 <td
                   className={
                     answer === item.correct_answer ? "correct" : "incorrect"
                   }
+                  dangerouslySetInnerHTML={{__html: sanitizer(answer)}}
                 >
-                  {answer}
                 </td>
               </tr>
             );

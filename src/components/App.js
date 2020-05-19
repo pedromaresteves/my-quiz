@@ -175,6 +175,7 @@ function App() {
             updateTime={updateTime}
             updatePlayerData={updatePlayerData}
             handleTime={handleTime}
+            resetTimeData={resetTimeData}
           />
         </Route>
         <Route>

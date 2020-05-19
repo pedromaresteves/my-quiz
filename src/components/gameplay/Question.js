@@ -1,4 +1,6 @@
 import React, { useRef } from "react";
+import dompurify from 'dompurify';
+const sanitizer = dompurify.sanitize;
 
 function Question(props) {
   const currentQuestionNum = props.questions.currentQuestionNum;
@@ -24,16 +26,16 @@ function Question(props) {
 
   return (
     <div>
-      <h4>{currentQuestion.question}</h4>
+      <h4 dangerouslySetInnerHTML={{__html: sanitizer(currentQuestion.question)}}></h4>
       <div id="possible-answers-list" ref={answersDiv}>
         {allAnswers.map((item) => (
           <button
-            key={item}
+            key={sanitizer(item)}
             className="answer-btn"
             disabled={!props.time.timeLeft}
             onClick={selectAnswer}
+            dangerouslySetInnerHTML={{__html: sanitizer(item)}}
           >
-            {item}
           </button>
         ))}
       </div>

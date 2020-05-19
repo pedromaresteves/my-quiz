@@ -1,9 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Question from "./Question";
 import { Results } from "./Results";
 
 function Game(props) {
+  let [callApiCounter, setCallApiCounter] = useState(0);
   useEffect(() => {
+    if (callApiCounter > 0) return;
+    props.resetTimeData(true);
     fetch(
       `https://opentdb.com/api.php?amount=${props.questions.numberOfQuestions}`
     )
@@ -15,7 +18,8 @@ function Game(props) {
           props.updateQuestions("results", data.results);
         }
       });
-  }, []);
+    setCallApiCounter(1);
+  }, [props, callApiCounter]);
   const currentQuestionNum = props.questions.currentQuestionNum;
   const startTimerBtn = useRef(null);
   const startTimer = () => {
