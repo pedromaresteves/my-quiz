@@ -7,7 +7,6 @@ function Home(props) {
       <Link to="/game-menu">
         <button onClick={props.resetFullState}>start quizz</button>
       </Link>
-      <button>join quizz</button>
     </div>
   );
 }

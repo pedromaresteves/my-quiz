@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="App-header">
       <Link className="not-normal-link" to="/">
-        <h1>Panther Quizz 2000</h1>
+        <h1>Panther Quiz 2000</h1>
       </Link>
     </header>
   );

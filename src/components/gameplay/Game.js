@@ -3,6 +3,7 @@ import Question from "./Question";
 import { Results } from "./Results";
 
 function Game(props) {
+  
   let [callApiCounter, setCallApiCounter] = useState(0);
   useEffect(() => {
     if (callApiCounter > 0) return;

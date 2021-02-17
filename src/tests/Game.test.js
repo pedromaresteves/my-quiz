@@ -14,12 +14,13 @@ test("With the default game settings the get ready message is shown", () => {
         playerData={defaultPlayerData}
         time={mockTime}
         updateGameSettings={mockUpdateFunction}
+        resetTimeData={mockUpdateFunction}
       />
     </MemoryRouter>
   );
   const getReadyMessage = container.querySelector("h4");
   const startBtn = container.querySelector("#start-game");
-  expect(getReadyMessage.textContent).toContain("Get Ready!");
+  expect(getReadyMessage.textContent).toContain("Press the button to start the game.");
   expect(startBtn).toBeDefined();
 });
 
@@ -28,7 +29,7 @@ test("With a multiple type question, there are 4 available answers", () => {
   mockTime.timeRunning = true;
   const { container } = render(
     <MemoryRouter>
-      <Game questions={mockQuestions} time={mockTime} />
+      <Game questions={mockQuestions} time={mockTime} resetTimeData={mockUpdateFunction} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");
@@ -49,7 +50,7 @@ test("With a boolean type question, there are 2 available answers", () => {
   mockQuestions.currentQuestionNum = 1;
   const { container } = render(
     <MemoryRouter>
-      <Game questions={mockQuestions} time={mockTime} />
+      <Game questions={mockQuestions} time={mockTime} resetTimeData={mockUpdateFunction} />
     </MemoryRouter>
   );
   const startBtn = container.querySelector("#start-game");

@@ -28,20 +28,7 @@ function GameMenu(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="gameMode">Choose Game Mode: </label>
-
-          <select
-            name="gameMode"
-            defaultValue={props.questions.gameMode}
-            onChange={handleFormChanges}
-          >
-            <option value="default">Default</option>
-            <option value="beQuizzmaster">Be The Quizzmaster</option>
-          </select>
-        </div>
-        <div>
           <label htmlFor="numberOfQuestions">Set Number Of Questions: </label>
-
           <select
             name="numberOfQuestions"
             defaultValue={props.questions.numberOfQuestions}

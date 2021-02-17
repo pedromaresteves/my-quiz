@@ -50,41 +50,6 @@ function App() {
     clearTimeout(timer);
   };
 
-  const resetPlayerData = () => {
-    setPlayerData({
-      name: "Player 1",
-      answers: [],
-    });
-  };
-
-  const resetQuestions = () => {
-    setQuestions({
-      gameMode: "default",
-      categories: "all",
-      numberOfQuestions: 15,
-      currentQuestionNum: 0,
-      results: [
-        {
-          category: "Entertainment: Video Games",
-          type: "multiple",
-          difficulty: "easy",
-          question:
-            "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
-          correct_answer: "Quake Engine",
-          incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
-        },
-        {
-          category: "Science & Nature",
-          type: "boolean",
-          difficulty: "easy",
-          question: "Igneous rocks are formed by excessive heat and pressure.",
-          correct_answer: "False",
-          incorrect_answers: ["True"],
-        },
-      ],
-    });
-  };
-
   const resetTimeData = (countdown) => {
     const changedtimeData = {
       timeLeft: questionTime,
@@ -94,12 +59,6 @@ function App() {
     if (countdown) changedtimeData.timeLeft = countdownTime;
     updateTime(changedtimeData);
     resetTimer();
-  };
-
-  const resetFullState = () => {
-    resetPlayerData();
-    resetQuestions();
-    resetTimeData(true);
   };
 
   const updatePlayerData = (propertyToUpdate, newValue) => {
@@ -153,7 +112,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          <Home resetFullState={resetFullState} />
+          <Home />
         </Route>
         <Route path="/game-menu">
           <GameMenu

@@ -19,28 +19,19 @@ test("Should update form changes", () => {
       />
     </MemoryRouter>
   );
-  const gameModeSelect = container.querySelector("[name='gameMode']");
   const playerInput = container.querySelector("[name='name']");
   const questionsSelect = container.querySelector("[name='numberOfQuestions']");
-  const gameModeLastOption = container.querySelector(
-    "[name='gameMode'] option:last-child"
-  );
   const questionsLastOption = container.querySelector(
     "[name='numberOfQuestions'] option:last-child"
   );
-  expect(gameModeSelect.value).toEqual("default");
-  fireEvent.change(gameModeSelect, {
-    target: { value: gameModeLastOption.value },
-  });
-  expect(mockUpdateQuestions).toHaveBeenCalledTimes(1);
-  expect(gameModeSelect.value).toEqual(gameModeLastOption.value);
+  expect(mockUpdateQuestions).toHaveBeenCalledTimes(0);
   fireEvent.change(playerInput, { target: { value: "Test Name Input" } });
   expect(mockUpdatePlayerData).toHaveBeenCalledTimes(1);
   expect(playerInput.value).toEqual("Test Name Input");
   fireEvent.change(questionsSelect, {
     target: { value: questionsLastOption.value },
   });
-  expect(mockUpdateQuestions).toHaveBeenCalledTimes(2);
+  expect(mockUpdateQuestions).toHaveBeenCalledTimes(1);
   expect(questionsSelect.value).toEqual(questionsLastOption.value);
 });
 
