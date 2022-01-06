@@ -15,27 +15,9 @@ function App() {
   const [questions, setQuestions] = useState({
     gameMode: "default",
     categories: "all",
-    numberOfQuestions: 15,
+    numberOfQuestions: 5,
     currentQuestionNum: 0,
-    results: [
-      {
-        category: "Entertainment: Video Games",
-        type: "multiple",
-        difficulty: "easy",
-        question:
-          "Half-Life by Valve uses the GoldSrc game engine, which is a highly modified version of what engine?",
-        correct_answer: "Quake Engine",
-        incorrect_answers: ["Doom Engine", "id Engine", "Source Engine"],
-      },
-      {
-        category: "Science & Nature",
-        type: "boolean",
-        difficulty: "easy",
-        question: "Igneous rocks are formed by excessive heat and pressure.",
-        correct_answer: "False",
-        incorrect_answers: ["True"],
-      },
-    ],
+    results: [],
   });
   const [playerData, setPlayerData] = useState({
     name: "Player 1",
@@ -73,6 +55,7 @@ function App() {
       [propertyToUpdate]: newValue,
     });
   };
+  
   const updateTime = (objectWithNewValues) => {
     setTime({ ...time, ...objectWithNewValues });
   };
@@ -104,6 +87,7 @@ function App() {
       }
     }, 1000);
   }, [time]);
+
   useEffect(() => {
     if (time.timeRunning) return handleTime();
   }, [time, handleTime]);
