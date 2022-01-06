@@ -7,8 +7,8 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
+    <Router basename='/my-quiz'>
+        <App />
     </Router>
   </React.StrictMode>,
   document.getElementById("root")
