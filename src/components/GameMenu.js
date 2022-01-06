@@ -13,6 +13,7 @@ function GameMenu(props) {
   };
   const setNewGame = () => {
     props.resetTimeData(true);
+    props.updatePlayerData("answers", []);
     return props.updateQuestions("currentQuestionNum", 0);
   };
   return (
@@ -37,8 +38,6 @@ function GameMenu(props) {
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
           </select>
         </div>
         <div className="form-group">
