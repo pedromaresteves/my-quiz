@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import dompurify from 'dompurify';
 const sanitizer = dompurify.sanitize;
 
@@ -45,6 +46,9 @@ function Results(props) {
           })}
         </tbody>
       </table>
+      <Link to="/">
+        <button>Back to Homepage</button>
+      </Link>
     </div>
   );
 }
