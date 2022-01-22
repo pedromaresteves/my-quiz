@@ -7,6 +7,9 @@
 
 # testing
 /coverage
+.mp4
+.png
+.js.mp4
 
 # production
 /build

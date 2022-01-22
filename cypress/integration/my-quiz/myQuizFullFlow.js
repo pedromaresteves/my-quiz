@@ -1,4 +1,4 @@
-const {testData} = require('../../fixtures/myQuizGameSettings.json')
+const {testData} = require('../../fixtures/myQuizGameSettings.js')
 
 describe('Full Quiz Flow', () => {
   testData.forEach(data => {

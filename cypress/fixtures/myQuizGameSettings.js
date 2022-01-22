@@ -1,5 +1,5 @@
-{
-"testData": [
+module.exports = {
+    "testData": [
         {
             "numOfQuestions": 5,
             "playerName": "User A"
