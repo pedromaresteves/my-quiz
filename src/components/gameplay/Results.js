@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import dompurify from 'dompurify';
 const sanitizer = dompurify.sanitize;
+function htmlDecodeAndRemoveSpaces(input) {
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent.replace(/\s/g, '');
+}
 
 function Results(props) {
   const correctAnswersNumber = getCorrectAnswerCount(
@@ -36,7 +40,7 @@ function Results(props) {
                 <td dangerouslySetInnerHTML={{__html: sanitizer(item.correct_answer)}}></td>
                 <td
                   className={
-                    answer === item.correct_answer ? "correct" : "incorrect"
+                    htmlDecodeAndRemoveSpaces(answer) === htmlDecodeAndRemoveSpaces(item.correct_answer) ? "correct" : "incorrect"
                   }
                   dangerouslySetInnerHTML={{__html: sanitizer(answer)}}
                 >
