@@ -40,6 +40,10 @@ button:hover {
   background-color: #ffffff;
 }
 
+#table-parent{
+  overflow-x:auto
+}
+
 .answer-btn {
   margin: 10px auto;
 }
