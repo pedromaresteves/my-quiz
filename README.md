@@ -14,7 +14,7 @@ You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
+Launches the test runner for unit tests in the interactive watch mode.<br />
 
 ### `npm run build`
 
