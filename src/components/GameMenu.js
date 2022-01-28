@@ -26,6 +26,7 @@ function GameMenu(props) {
             name="name"
             defaultValue={props.playerData.name}
             onChange={handleFormChanges}
+            maxLength="20"
           ></input>
         </div>
         <div>
