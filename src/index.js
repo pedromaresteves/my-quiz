@@ -7,7 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter basename='/my-quiz'>
+    <HashRouter basename='/'>
         <App />
     </HashRouter>
   </React.StrictMode>,
