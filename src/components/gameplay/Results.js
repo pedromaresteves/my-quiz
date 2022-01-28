@@ -41,7 +41,7 @@ function Results(props) {
                   <td dangerouslySetInnerHTML={{__html: sanitizer(item.correct_answer)}}></td>
                   <td
                     className={
-                      htmlDecodeAndRemoveSpaces(answer) === htmlDecodeAndRemoveSpaces(item.correct_answer) ? "correct" : "incorrect"
+                      isAnswerCorrect(answer, item.correct_answer) ? "correct" : "incorrect"
                     }
                     dangerouslySetInnerHTML={{__html: sanitizer(answer)}}
                   >
@@ -63,9 +63,13 @@ const getCorrectAnswerCount = (questions, playerData) => {
   let correctAnswersCounter = 0;
   questions.results.forEach((item) => {
     const answer = playerData.answers[questions.results.indexOf(item)];
-    if (htmlDecodeAndRemoveSpaces(answer) === htmlDecodeAndRemoveSpaces(item.correct_answer)) correctAnswersCounter++;
+    if(isAnswerCorrect(answer, item.correct_answer)) correctAnswersCounter++;
   });
   return correctAnswersCounter;
 };
+
+const isAnswerCorrect = (guess, correctAnswer) => {
+  if (htmlDecodeAndRemoveSpaces(guess) === htmlDecodeAndRemoveSpaces(correctAnswer)) return true;
+}
 
 export { getCorrectAnswerCount, Results };
