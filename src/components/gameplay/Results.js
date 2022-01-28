@@ -72,4 +72,4 @@ const isAnswerCorrect = (guess, correctAnswer) => {
   if (htmlDecodeAndRemoveSpaces(guess) === htmlDecodeAndRemoveSpaces(correctAnswer)) return true;
 }
 
-export { getCorrectAnswerCount, Results };
+export { getCorrectAnswerCount, Results, isAnswerCorrect};

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Results, getCorrectAnswerCount } from "../components/gameplay/Results";
+import { Results, getCorrectAnswerCount, isAnswerCorrect } from "../components/gameplay/Results";
 import { mockQuestions, mockPlayerData } from "./testHelpers";
 
 let firstAnswerToBeCorrect = mockQuestions.results[0].correct_answer;
@@ -33,3 +33,10 @@ test("getCorrectAnswerCount Works as expected", () => {
   mockPlayerData.answers = [firstAnswerToBeCorrect, secondAnswerToBeIncorrect];
   expect(getCorrectAnswerCount(mockQuestions, mockPlayerData)).toEqual(1);
 });
+
+test("Check isAnswerCorrect function works", () => {
+  expect(isAnswerCorrect("Shake &amp; Bake", "Shake & Bake")).toBe(true);
+  expect(isAnswerCorrect("Shake &AMP; Bake", "Shake & Bake")).toBe(true);
+  expect(isAnswerCorrect("Shake &#x00026; Bake", "Shake & Bake")).toBe(true);
+  expect(isAnswerCorrect("Shake &#38; Bake", "Shake & Bake")).toBe(true);
+})
